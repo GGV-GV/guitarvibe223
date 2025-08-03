@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Фотки от подписчиков</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>📸 Фотки от подписчиков</h1>
+    <nav>
+      <a href="/">Главная</a> |
+      <a href="/moderate">Модерация</a> |
+      <a href="/from-users">Фотки от подписчиков</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="gallery">
+      {% for file in files %}
+        <div class="gallery-item">
+          {% if file.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+            <img src="{{ url_for('uploaded_file', filename=file) }}" alt="Фото от подписчика">
+          {% elif file.endswith(('.mp4', '.mov')) %}
+            <video controls>
+              <source src="{{ url_for('uploaded_file', filename=file) }}">
+            </video>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 GuitarVibe. Галерея подписчиков</p>
+  </footer>
+
+</body>
+</html>

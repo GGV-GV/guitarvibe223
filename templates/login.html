@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход | GuitarVibe</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>🔐 Вход модератора</h1>
+    <nav>
+      <a href="/">Главная</a> |
+      <a href="/from-users">Фотки от подписчиков</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      {% if error %}
+        <p style="color:red;">{{ error }}</p>
+      {% endif %}
+      <form method="POST" class="login-form">
+        <input type="text" name="username" placeholder="Логин" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 GuitarVibe</p>
+  </footer>
+
+</body>
+</html>

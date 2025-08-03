@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Модерация файлов</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>🛡 Модерация файлов</h1>
+    <nav>
+      <a href="/">Главная</a> |
+      <a href="/logout">Выйти</a>
+    </nav>
+  </header>
+
+  <main>
+    {% if files %}
+      {% for file in files %}
+        <div class="moderation-item">
+          {% if file.endswith('.mp4') or file.endswith('.mov') %}
+            <video class="my-video" controls>
+              <source src="{{ url_for('static', filename='uploads/pending/' + file) }}">
+              Ваш браузер не поддерживает видео.
+            </video>
+          {% else %}
+            <img src="{{ url_for('static', filename='uploads/pending/' + file) }}" class="my-photo" alt="На модерации">
+          {% endif %}
+          <div class="moderation-buttons">
+            <a href="{{ url_for('approve', filename=file) }}?token={{ token }}" class="approve-btn">✅ Принять</a>
+            <a href="{{ url_for('reject', filename=file) }}?token={{ token }}" class="reject-btn">❌ Отклонить</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Нет файлов для модерации.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>© 2025 GuitarVibe. Панель модератора</p>
+  </footer>
+
+</body>
+</html>

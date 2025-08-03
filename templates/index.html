@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GuitarVibe</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>👹 Добро пожаловать на GuitarVibe!</h1>
+    <p>Мой сайт о гитаре, музыке и вдохновении</p>
+    <nav>
+      <a href="/">Главная</a> |
+      <a href="/from-users">Фотки от подписчиков</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>🔥 Моя история</h2>
+      <p>Привет, меня зовут Виктор, и мне 16 лет. Люблю играть на гитаре. Здесь я делюсь тем, что мне нравится.</p>
+    </section>
+
+    <section>
+      <h2>🎸 Моё фото с гитарой</h2>
+      <img src="{{ url_for('static', filename='images/123.jpg') }}" class="my-photo" alt="Я с гитарой">
+    </section>
+
+    <section>
+      <h2>🎥 Видео: Я играю на гитаре</h2>
+      <video class="my-video" controls>
+        <source src="{{ url_for('static', filename='videos/1223.mp4') }}" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+      </video>
+    </section>
+
+    <section>
+      <h2>📤 Поделись своей гитарной фоткой или видео!</h2>
+      <form method="POST" action="/upload" enctype="multipart/form-data" class="upload-form">
+        <input type="file" name="file" accept="image/*,video/*" required class="file-input">
+        <button type="submit" class="upload-btn">Загрузить</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>🖼 Загруженные фото и видео (ожидают проверки)</h2>
+      {% for file in files %}
+        {% if file.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+          <img src="{{ url_for('uploaded_file', filename=file) }}" class="my-photo" alt="Загруженное фото">
+        {% elif file.endswith(('.mp4', '.mov')) %}
+          <video class="my-video" controls>
+            <source src="{{ url_for('uploaded_file', filename=file) }}" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+          </video>
+        {% endif %}
+      {% endfor %}
+      <p class="note">* Эти файлы ещё не прошли модерацию и не попали в раздел «Фотки от подписчиков».</p>
+    </section>
+
+    <section>
+      <h2>📬 Контакты</h2>
+      <p>Связь: <a href="https://www.instagram.com/sportiki593" target="_blank">@sportiki593</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 GuitarVibe. Все права защищены.</p>
+  </footer>
+
+</body>
+</html>
